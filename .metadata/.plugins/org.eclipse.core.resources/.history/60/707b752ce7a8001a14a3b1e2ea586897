@@ -1,0 +1,18 @@
+package pages;
+
+public class ProdutoPage {
+
+		private WebDriver driver;
+		
+		public ProdutoPage(WebDriver driver) {
+			this.driver = driver;
+		}
+		
+		public String obterNomeProduto() {
+			
+		}
+		
+		public String obterPrecoProduto() {
+			
+		}
+}

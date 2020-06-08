@@ -1,0 +1,46 @@
+package pages;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+
+public class ModalProdutoPage {
+
+	private WebDriver driver;
+	
+	private By msgProdutoAdd = By.id("myModalLabel");
+	private By descricaoProduto = By.className("product-name");
+	private By precoProduto = By.cssSelector("div.modal-body p.product-price");
+	private By caractProduto = By.cssSelector("div.divide-right .col-md-6:nth-child(2) span strong");
+
+	
+	public ModalProdutoPage (WebDriver driver) {
+		this.driver = driver;
+	}
+	
+	public String obterMsgProdutoAdd() {
+		FluentWait wait = new FluentWait(driver).withTimeout(Duration.ofSeconds(5))
+				.pollingEvery(Duration.ofSeconds(1))
+				.ignoring(NoSuchElementException.class);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(msgProdutoAdd));
+				
+		return driver.findElement(msgProdutoAdd).getText();
+	}
+	
+	public String obterTamanhoProduto() {
+		return driver.findElements(caractProduto).get(0).getText();
+	}
+	
+	public String obterCorProduto() {
+		return driver.findElements(caractProduto).get(1).getText();
+	}
+	
+	public String obterQtdProduto() {
+		return driver.findElements(caractProduto).get(2).getText();
+	}
+
+}

@@ -1,0 +1,45 @@
+package homepage;
+
+import org.junit.jupiter.api.Test;
+
+import base.BaseTests;
+import pages.ProdutoPage;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+
+public class HomePageTestes extends BaseTests{
+
+	@Test
+	public void testContarProdutos() {
+		carregarPagInicial();
+		assertThat(homePage.contarProdutos(), is(8));
+	}
+	
+	@Test
+	public void testValidarCarrinhoVazio() {
+		int produtosCarrinho = homePage.obterQtdProdutoCarrinho();
+//		System.out.println(produtosCarrinho);
+		assertThat(produtosCarrinho, is(0));
+	}
+	
+	@Test
+	public void testValidarDetalhesProduto() {
+		int indice = 0;
+		String nomeProdutoHome = homePage.obterNomeProduto(indice);
+		String precoProdutoHome = homePage.obterPrecoProduto(indice);
+	
+		System.out.println(nomeProdutoHome);
+		System.out.println(precoProdutoHome);
+		
+		ProdutoPage produtoPage = homePage.clicarProduto(indice);
+
+		String nomeProdutoPage = produtoPage.obterNomeProduto(indice);
+		String precoProdutoPage = produtoPage.obterPrecoProduto(indice);
+	
+		System.out.println(nomeProdutoPage);
+		System.out.println(precoProdutoPage);
+		
+	}
+}

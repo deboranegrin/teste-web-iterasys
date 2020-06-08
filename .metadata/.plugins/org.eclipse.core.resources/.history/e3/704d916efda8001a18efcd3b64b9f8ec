@@ -1,0 +1,91 @@
+package homepage;
+
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
+
+import base.BaseTests;
+import pages.LoginPage;
+import pages.ProdutoPage;
+
+import static org.hamcrest.Matchers.is;
+
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+
+public class HomePageTestes extends BaseTests {
+
+	@Test
+	public void testContarProdutos() {
+		carregarPagInicial();
+		assertThat(homePage.contarProdutos(), is(8));
+	}
+
+	@Test
+	public void testValidarCarrinhoVazio() {
+		int produtosCarrinho = homePage.obterQtdProdutoCarrinho();
+//		System.out.println(produtosCarrinho);
+		assertThat(produtosCarrinho, is(0));
+	}
+
+	ProdutoPage produtoPage;
+
+	@Test
+	public void testValidarDetalhesProduto() {
+		int indice = 0;
+		String nomeProdutoHome = homePage.obterNomeProduto(indice);
+		String precoProdutoHome = homePage.obterPrecoProduto(indice);
+
+		System.out.println(nomeProdutoHome);
+		System.out.println(precoProdutoHome);
+
+		produtoPage = homePage.clicarProduto(indice);
+
+		String nomeProdutoPage = produtoPage.obterNomeProduto();
+		String precoProdutoPage = produtoPage.obterPrecoProduto();
+
+		System.out.println(nomeProdutoPage);
+		System.out.println(precoProdutoPage);
+
+		assertThat(nomeProdutoHome.toUpperCase(), is(nomeProdutoPage.toUpperCase()));
+		assertThat(precoProdutoHome, is(precoProdutoPage));
+
+	}
+
+	LoginPage loginPage;
+
+	@Test
+	public void testLoginComSucesso() {
+		loginPage = homePage.clicarBotaoSignIn();
+		loginPage.preencherEmail("teste@teste.com");
+		loginPage.preencherSenha("teste");
+		loginPage.clicarBotaoSignIn();
+		assertThat(homePage.estaLogado("Teste Testador"), is(true));
+		carregarPagInicial();
+	}
+
+	@Test
+	public void incluirProdutoCarrinho() {
+		if (!homePage.estaLogado("Teste Testador")) {
+			testLoginComSucesso();
+		}
+			testValidarDetalhesProduto();
+		
+		public Select comboBoxTamanho() {
+			return new Select(driver.findElement(tamanhoProduto));
+		}
+		
+		public List<String> opcoesComboBoxTamanho() {
+			List<WebElement> elementosSelecionados =
+			comboBoxTamanho().getAllSelectedOptions();
+			
+			List<String> listaOpcoesSelecionadas = new ArrayList();
+			
+			for (WebElement elemento : elementosSelecionados) {
+				listaOpcoesSelecionadas.add(elemento.getText());
+			}
+			return listaOpcoesSelecionadas;
+		}
+		
+	}
+}

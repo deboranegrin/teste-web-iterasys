@@ -1,0 +1,13 @@
+package pages;
+
+import org.openqa.selenium.WebDriver;
+
+public class ModalProdutoPage {
+
+	private WebDriver driver;
+	
+	public ModalProdutoPage (WebDriver driver) {
+		this.driver = driver;
+	}
+	
+}
